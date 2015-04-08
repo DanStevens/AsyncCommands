@@ -1,0 +1,10 @@
+﻿<Window x:Class="AsyncCommands.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="144" Width="287">
+    <Grid>
+        <TextBox Text="{Binding Url}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="23" Margin="10,10,10,0" />
+        <Button Command="{Binding CountUrlBytesCommand}" Content="Go" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,38,0,0" Width="75"/>
+        <TextBlock Text="{Binding ByteCount}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,63,0,0" />
+    </Grid>
+</Window>
