@@ -6,14 +6,16 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     public NotifyTaskCompletion(Task<TResult> task)
     {
         Task = task;
-        if (!task.IsCompleted)
-            TaskCompletion = WatchTaskAsync(task);
+        if (task.IsCompleted)
+            TaskCompletion = System.Threading.Tasks.Task.FromResult(0);
+        else
+            TaskCompletion = WatchTaskAsync();
     }
-    private async Task WatchTaskAsync(Task task)
+    private async Task WatchTaskAsync()
     {
         try
         {
-            await task;
+            await Task;
         }
         catch
         {
@@ -24,11 +26,11 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
         propertyChanged(this, new PropertyChangedEventArgs("Status"));
         propertyChanged(this, new PropertyChangedEventArgs("IsCompleted"));
         propertyChanged(this, new PropertyChangedEventArgs("IsNotCompleted"));
-        if (task.IsCanceled)
+        if (Task.IsCanceled)
         {
             propertyChanged(this, new PropertyChangedEventArgs("IsCanceled"));
         }
-        else if (task.IsFaulted)
+        else if (Task.IsFaulted)
         {
             propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
             propertyChanged(this, new PropertyChangedEventArgs("Exception"));
